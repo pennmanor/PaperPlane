@@ -1,11 +1,19 @@
 var username = "";
 var room = "";
 var socket = io.connect();
+var title = "";
 
 $("#changeRoom").modal({
 	keyboard: false,
 	backdrop: "static"	
 });
+
+$("#changeTitle").modal({
+	keyboard: false,
+	backdrop: "static"	
+});
+$("#changeTitle").modal("hide");
+
 $("#changeRoom").modal("show");
 $("#urlAlert").hide();
 $("#changeRoomFormAlert").hide();
@@ -48,22 +56,46 @@ $("#urlSubmitButton").click(function()
 		$("#urlAlert").show();
 		return;
 	}
-		
-	socket.emit("link", {room:room, username:username, linkTitle:url, url:url});
+	socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
 	$("#urlInputField").val("");
 	$("#urlAlert").hide();
 });
 
+$("#urlInfoButton").click(function()
+{
+	$("#changeTitle").modal("show");
+});
 
-function appendLink(user, urlName, url)
+$("#setTitleButton").click(function()
+{
+	title = $.trim($("#urlTitleField").val());
+	$("#urlTitleField").val("");
+	
+	if ( title == "" )
+		$("#urlInfoButton").html("Set Title");
+	else
+		$("#urlInfoButton").html(title);
+	$("#changeTitle").modal("hide");
+});
+
+$("#changeTitleBackButton").click(function()
+{
+	$("#changeTitle").modal("hide");
+});
+
+
+function appendLink(user, urlName, url, customTitle)
 {
 	chatBody = $("#chatBody").html();
-	chatBody = "<strong>"+user+"</strong> posted a link to <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
+	if ( customTitle == "" )
+		chatBody = "<strong>"+user+"</strong> posted a link to <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
+	else
+		chatBody = "<strong>"+user+"</strong> posted a link for "+customTitle+" - <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
 	$("#chatBody").html(chatBody);
 }
 
 socket.on("link", function(data)
 {
 	if ( data.room == room )
-		appendLink(data.username, data.linkTitle, data.url);
+		appendLink(data.username, data.linkTitle, data.url, data.customTitle);
 });
