@@ -46,7 +46,7 @@ io.on("connection", function(socket)
 			url = urlParser.parse(data.url);
 			var options = {
 				host: url.hostname,
-				path: data.pathname,
+				path: url.pathname,
 				port: 80,
 				method: "GET",
 				headers: {
