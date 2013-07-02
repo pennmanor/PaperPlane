@@ -3,16 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>PaperPlane</title>
-
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
-	<script src="socket.io/socket.io.js"></script>
   </head>
-	
   <body>
-
-    <div class="navbar navbar-inverse navbar-static-top">
+    <div id="url-bar" class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -27,12 +23,11 @@
         </div>
       </div>
     </div>
-
-    <div id="content" class="container"> 
+    <div id="content" class="container">
 		<!-- Choose room modal -->
 		<div id="changeRoom" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="changeRoomLabel" aria-hidden="true">
 		  <div class="modal-header">
-		    <h3 id="changeRoomLabel">Connect</h3>
+		    <h3>Connect</h3>
 		  </div>
 		  <div class="modal-body">
 	  		  <div id="changeRoomFormAlert" class="alert"></div>
@@ -45,10 +40,9 @@
 		    <button id="joinRoomButton" class="btn btn-primary">Join</button>
 		  </div>
 		</div>
-		
 		<div id="changeTitle" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="changeTitleLabel" aria-hidden="true">
 		  <div class="modal-header">
-		    <h3 id="changeRoomLabel">Set Title</h3>
+		    <h3>Set Title</h3>
 		  </div>
 		  <div class="modal-body">
 			  <div class="text-center">
@@ -60,11 +54,9 @@
 		    <button id="setTitleButton" class="btn btn-primary">Set</button>
 		  </div>
 		</div>
-		
 		<div id="urlAlert" class="alert">
 			Please enter a valid URL (starts with http or https)
 		</div>
-		
 		<!-- Submit URL form -->
 		<div id="urlSubmitForm">
 			<div class="input-append input-prepend">
@@ -75,12 +67,10 @@
 			</div>
 		</div>
 		<br>
-		
 		<div id="chatBody" class="well">
-			
 		</div>
     </div> <!-- /container -->
-
+	<script src="socket.io/socket.io.js"></script>
     <script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/index.js"></script>

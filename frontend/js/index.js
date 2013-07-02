@@ -76,6 +76,7 @@ $("#setTitleButton").click(function()
 	else
 		$("#urlInfoButton").html(title);
 	$("#changeTitle").modal("hide");
+	barResize();
 });
 
 $("#changeTitleBackButton").click(function()
@@ -93,6 +94,19 @@ function appendLink(user, urlName, url, customTitle)
 		chatBody = "<strong>"+user+"</strong> posted a link for "+customTitle+" - <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
 	$("#chatBody").html(chatBody);
 }
+
+function barResize(){
+	var barSize = $('#chatBody').outerWidth();
+	var setButtonSize = $('#urlInfoButton').outerWidth();
+	var sendButtonSize = $('#urlSubmitButton').outerWidth();
+	
+	$('#urlInputField').outerWidth(barSize-setButtonSize-sendButtonSize);
+	
+}
+$(document).ready(function() {
+  barResize();
+});
+$(window).resize(barResize);
 
 socket.on("link", function(data)
 {
