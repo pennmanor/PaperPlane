@@ -84,13 +84,28 @@ $("#changeTitleBackButton").click(function()
 	$("#changeTitle").modal("hide");
 });
 
+$('#urlInputField').keypress(function(e)
+{
+    if(e.which == 13) {
+		url = $("#urlInputField").val();
+		prefix = url.split(":")[0];
+		if ( prefix != "http" && prefix != "https" )
+		{
+			$("#urlAlert").show();
+			return;
+		}
+		socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
+		$("#urlInputField").val("");
+		$("#urlAlert").hide();
+    }
+});
 
 function appendLink(user, urlName, url, customTitle)
 {
 	$("#urlInfoButton").html("Set Title");
+	title = '';
 	barResize();
 	
-	//$("#chatBody").prepend()
 	if ( customTitle == "" ){
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
@@ -98,7 +113,6 @@ function appendLink(user, urlName, url, customTitle)
 		insertElementAt(createElement('a', {'href':url}, url), data);
 		$("#chatBody").prepend(data)
 	}
-		//chatBody = "<strong>"+user+"</strong> posted a link to <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
 	else{
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
