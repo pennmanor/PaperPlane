@@ -110,20 +110,16 @@ function appendLink(user, urlName, url, customTitle)
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
 		insertElementAt(createText(' posted a link to '), data);
-		insertElementAt(createElement('a', {'href':url}, url), data);
+		insertElementAt(createElement('a', {'href':url}, urlName), data);
 		$("#chatBody").prepend(data)
 	}
 	else{
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
 		insertElementAt(createText(" posted a link for " + customTitle + " - "), data);
-		insertElementAt(createElement('a', {'href':url}, url), data);
+		insertElementAt(createElement('a', {'href':url}, urlName), data);
 		$("#chatBody").prepend(data)
 	}
-		//chatBody = "<strong>"+user+"</strong> posted a link for "+customTitle+" - <a href=\""+url+"\">"+urlName+"</a><br><br>"+chatBody;
-	//$("#chatBody").html(chatBody);
-	
-	
 }
 
 function barResize(){
