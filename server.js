@@ -8,6 +8,7 @@ var scheduler = require("node-schedule"),
 	io = require('socket.io').listen(server);
 
 app.use(express.static("frontend"));
+app.use(express.bodyParser());
 
 var getURLTitle = true;
 var log = new Array();
@@ -27,6 +28,15 @@ function saveAndPushLink(link)
 	log.push(link);
 	io.sockets.emit("link", link);
 }
+
+
+app.post("/uploadHandler", function(req,res)
+{
+	console.log(req.files);
+	console.log(req.params);
+	console.log(req.body);
+	console.log(req.query);
+});
 
 io.on("connection", function(socket)
 {

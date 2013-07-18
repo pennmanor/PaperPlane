@@ -5,6 +5,8 @@
     <title>PaperPlane</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap-fileupload.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
 	<link href="css/index.css" rel="stylesheet">
   </head>
   <body>
@@ -17,9 +19,13 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">PaperPlane - Room <span id="roomNumber">---</span></a>
-            <ul class="nav pull-right">
-              <li><a id="changeRoomButton" href="#">Change Room</a></li>
-            </ul>
+		  <div class="nav-collapse collapse">
+              <ul class="nav pull-right">
+    			  <li class="active"><a href="#urlSubmitForm" data-toggle="tab">Link</a></li>
+    			  <li><a href="#fileSubmitForm" data-toggle="tab">File</a></li>
+              
+              </ul>
+		  </div>
         </div>
       </div>
     </div>
@@ -57,13 +63,37 @@
 		<div id="urlAlert" class="alert">
 			Please enter a valid URL (starts with http or https)
 		</div>
-		<!-- Submit URL form -->
-		<div id="urlSubmitForm">
-			<div class="input-append input-prepend">
-				<button id="urlInfoButton" class="btn">Set Title</button>
-				<input type="text" class="span11" id="urlInputField" placeholder="Paste your URL here">
+		<div class="tab-content">
+			<!-- Submit URL form -->
+			<div id="urlSubmitForm" class="tab-pane active">
+				<div class="input-append input-prepend">
+					<div class="btn-group">
+						<button id="urlInfoButton" class="btn ">Set Title</button>
+						<input type="text" class="span11" id="urlInputField" placeholder="Paste your URL here">
+						<button id="urlSubmitButton" class="btn btn-primary">Send</button>
+					</div>
+				</div>
+			</div>
+			<div id="fileSubmitForm" class="tab-pane">
 				
-				<button id="urlSubmitButton" class="btn btn-primary">Send</button>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+				  <div class="input-append input-prepend">
+					  <div class="btn-group">
+						  <button id="fileInfoButton" class="btn">Set Title</button>
+						  <div class="uneditable-input span3">
+							  <i class="icon-file fileupload-exists"></i>
+							  <span class="fileupload-preview"></span>
+						  </div>
+						  <span class="btn btn-file">
+							  <span class="fileupload-new">Select file</span>
+							  <span class="fileupload-exists">Change</span>
+							  <input id="fileInput" type="file" />
+						  </span>
+						  <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						  <button id="fileSubmitButton" class="btn btn-success">Send</button>
+	  				  </div>
+					  </div>
+				</div>
 			</div>
 		</div>
 		<br>
@@ -73,6 +103,8 @@
 	<script src="socket.io/socket.io.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<script src="js/bootstrap-fileupload.min.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script src="js/object.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/index.js"></script>
   </body>

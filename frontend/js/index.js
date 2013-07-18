@@ -70,11 +70,16 @@ $("#setTitleButton").click(function()
 {
 	title = $.trim($("#urlTitleField").val());
 	$("#urlTitleField").val("");
+	$("#fileTitleField").val("");
 	
-	if ( title == "" )
+	if ( title == "" ){
 		$("#urlInfoButton").html("Set Title");
-	else
+		$("#fileInfoButton").html("Set Title");
+	}
+	else{
 		$("#urlInfoButton").html(title);
+		$("#fileInfoButton").html(title);
+	}	
 	$("#changeTitle").modal("hide");
 	barResize();
 });
@@ -98,6 +103,10 @@ $('#urlInputField').keypress(function(e)
 		$("#urlInputField").val("");
 		$("#urlAlert").hide();
     }
+});
+
+$('a[data-toggle="tab"]').on('shown', function (e) {
+	barResize();
 });
 
 function appendLink(user, urlName, url, customTitle)
@@ -124,16 +133,41 @@ function appendLink(user, urlName, url, customTitle)
 
 function barResize(){
 	var barSize = $('#chatBody').outerWidth();
-	var setButtonSize = $('#urlInfoButton').outerWidth();
-	var sendButtonSize = $('#urlSubmitButton').outerWidth();
+	var setUrlButtonSize = $('#urlInfoButton').outerWidth();
+	var sendUrlButtonSize = $('#urlSubmitButton').outerWidth();
+	var setFileButtonSize = $('#fileInfoButton').outerWidth();
+	var sendFileButtonSize = $('#fileSubmitButton').outerWidth();
 	
-	$('#urlInputField').outerWidth(barSize-setButtonSize-sendButtonSize);
+	$('#urlInputField').outerWidth(barSize-setUrlButtonSize-sendUrlButtonSize);
+	$('#fileInputField').outerWidth(barSize-setFileButtonSize-sendFileButtonSize);
 	
 }
 $(document).ready(function() {
   barResize();
 });
 $(window).resize(barResize);
+
+
+$("#fileSubmitButton").click(function()
+{
+	var fileObj = document.getElementById("fileInput");
+	if ( fileObj.files.length == 0 )
+		return;
+	
+	var f = new FormData();
+	f.append("file", fileObj.files[0]);
+	$.ajax({
+		"url": "/uploadHandler",
+		data: f,
+		contentType: false,
+		processData: false,
+		type: "POST",
+		success: function ()
+		{
+			
+		}
+	});
+});
 
 socket.on("link", function(data)
 {
