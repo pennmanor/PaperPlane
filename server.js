@@ -1,4 +1,5 @@
-var scheduler = require("node-schedule"),
+var fs = require("fs"),
+	scheduler = require("node-schedule"),
 	urlParser = require("url"),
 	cheerio = require("cheerio"),
 	express = require("express"),
@@ -9,6 +10,8 @@ var scheduler = require("node-schedule"),
 
 app.use(express.static("frontend"));
 app.use(express.bodyParser());
+
+app.use("/uploads", express.static("uploads"));
 
 var getURLTitle = true;
 var log = new Array();
@@ -32,10 +35,25 @@ function saveAndPushLink(link)
 
 app.post("/uploadHandler", function(req,res)
 {
-	console.log(req.files);
-	console.log(req.params);
-	console.log(req.body);
-	console.log(req.query);
+	uploadedFile = req.files.file;
+	if ( !uploadedFile )
+		res.send("You didn't send a file!");
+		
+	fs.readFile(uploadedFile.name, function(err, data)
+	{
+		var fsName = (new Date().getTime())+uploadedFile.name;
+		var fTitle = req.param("title");
+		if ( !fTitle )
+			fTitle = uploadedFile.name;
+		fs.writeFile("uploads/"+fsName, data, function(err)
+		{
+			f = {type:"file", username: req.param("username"), fileName: uploadedFile.name, fsFileName: fsName, title: fTitle, room: req.param("room")};
+			log.push(f);
+			io.sockets.emit("file", f);
+		});
+	});
+	
+	res.send("OK");
 });
 
 io.on("connection", function(socket)
@@ -44,7 +62,7 @@ io.on("connection", function(socket)
 	{
 		for( var i = 0; i < log.length; i++ )
 		{
-			socket.emit("link", log[i]);
+			socket.emit(log[i].type, log[i]);
 		}
 	});
 	

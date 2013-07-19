@@ -57,8 +57,11 @@ $("#urlSubmitButton").click(function()
 		return;
 	}
 	socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
+	$("#urlInfoButton").html("Set Title");
+	title = '';
 	$("#urlInputField").val("");
 	$("#urlAlert").hide();
+	barResize();
 });
 
 $("#urlInfoButton").click(function()
@@ -110,11 +113,7 @@ $('a[data-toggle="tab"]').on('shown', function (e) {
 });
 
 function appendLink(user, urlName, url, customTitle)
-{
-	$("#urlInfoButton").html("Set Title");
-	title = '';
-	barResize();
-	
+{	
 	if ( customTitle == "" ){
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
@@ -156,6 +155,10 @@ $("#fileSubmitButton").click(function()
 	
 	var f = new FormData();
 	f.append("file", fileObj.files[0]);
+	f.append("room", room);
+	f.append("username", username);
+	f.append("customTitle", title);
+	
 	$.ajax({
 		"url": "/uploadHandler",
 		data: f,
@@ -173,4 +176,16 @@ socket.on("link", function(data)
 {
 	if ( data.room == room )
 		appendLink(data.username, data.linkTitle, data.url, data.customTitle);
+});
+
+socket.on("file", function(data)
+{
+	if ( data.room == room )
+	{	
+		ele = createElement('p');
+		insertElementAt(createElement('strong', null, data.username), ele);
+		insertElementAt(createText(' posted a file: '), ele);
+		insertElementAt(createElement('a', {'href':"uploads/"+data.fsFileName}, data.title), ele);
+		$("#chatBody").prepend(ele);
+	}
 });
