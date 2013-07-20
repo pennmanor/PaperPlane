@@ -58,6 +58,7 @@ $("#urlSubmitButton").click(function()
 	}
 	socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
 	$("#urlInfoButton").html("Set Title");
+	$("#fileInfoButton").html("Set Title");
 	title = '';
 	$("#urlInputField").val("");
 	$("#urlAlert").hide();
@@ -65,6 +66,11 @@ $("#urlSubmitButton").click(function()
 });
 
 $("#urlInfoButton").click(function()
+{
+	$("#changeTitle").modal("show");
+});
+
+$("#fileInfoButton").click(function()
 {
 	$("#changeTitle").modal("show");
 });
@@ -102,14 +108,13 @@ $('#urlInputField').keypress(function(e)
 			$("#urlAlert").show();
 			return;
 		}
+		$("#urlInfoButton").html("Set Title");
+		$("#fileInfoButton").html("Set Title");
+		title = '';
 		socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
 		$("#urlInputField").val("");
 		$("#urlAlert").hide();
     }
-});
-
-$('a[data-toggle="tab"]').on('shown', function (e) {
-	barResize();
 });
 
 function appendLink(user, urlName, url, customTitle)
@@ -138,14 +143,25 @@ function barResize(){
 	var sendFileButtonSize = $('#fileSubmitButton').outerWidth();
 	
 	$('#urlInputField').outerWidth(barSize-setUrlButtonSize-sendUrlButtonSize);
-	$('#fileInputField').outerWidth(barSize-setFileButtonSize-sendFileButtonSize);
+	if(document.getElementById("fileInput").files.length == 0)
+		$('#fileInputField').outerWidth(barSize-setFileButtonSize-sendFileButtonSize - $('#fileUploadButton').innerWidth());
+	else
+		$('#fileInputField').innerWidth(barSize-setFileButtonSize-sendFileButtonSize - $('#fileUploadButton').innerWidth() - $('#fileRemoveButton').innerWidth());
 	
 }
 $(document).ready(function() {
   barResize();
 });
+
 $(window).resize(barResize);
 
+$('a[data-toggle="tab"]').on('shown', function (e) {
+	barResize();
+});
+
+$('#fileInput').change(function (evt){
+	barResize();
+});
 
 $("#fileSubmitButton").click(function()
 {
@@ -159,6 +175,10 @@ $("#fileSubmitButton").click(function()
 	f.append("username", username);
 	f.append("customTitle", title);
 	
+	$("#urlInfoButton").html("Set Title");
+	$("#fileInfoButton").html("Set Title");
+	title = '';
+	
 	$.ajax({
 		"url": "/uploadHandler",
 		data: f,
@@ -167,9 +187,11 @@ $("#fileSubmitButton").click(function()
 		type: "POST",
 		success: function ()
 		{
-			
+			$('.fileupload').fileupload('reset');
+			barResize();
 		}
 	});
+	
 });
 
 socket.on("link", function(data)
