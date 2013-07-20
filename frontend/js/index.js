@@ -173,7 +173,7 @@ $("#fileSubmitButton").click(function()
 	f.append("file", fileObj.files[0]);
 	f.append("room", room);
 	f.append("username", username);
-	f.append("customTitle", title);
+	f.append("title", title);
 	
 	$("#urlInfoButton").html("Set Title");
 	$("#fileInfoButton").html("Set Title");
