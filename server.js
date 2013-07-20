@@ -36,16 +36,17 @@ function saveAndPushLink(link)
 app.post("/uploadHandler", function(req,res)
 {
 	uploadedFile = req.files.file;
+	console.log(req.files);
 	if ( !uploadedFile )
 		res.send("You didn't send a file!");
 		
-	fs.readFile(uploadedFile.name, function(err, data)
+	fs.readFile(uploadedFile.path, function(err, data)
 	{
 		var fsName = (new Date().getTime())+uploadedFile.name;
 		var fTitle = req.param("title");
 		if ( !fTitle )
 			fTitle = uploadedFile.name;
-		fs.writeFile("uploads/"+fsName, data, function(err)
+		fs.writeFile("uploads/"+fsName, data.toString(), function(err)
 		{
 			f = {type:"file", username: req.param("username"), fileName: uploadedFile.name, fsFileName: fsName, title: fTitle, room: req.param("room")};
 			log.push(f);
