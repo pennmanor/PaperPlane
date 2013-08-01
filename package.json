@@ -1,0 +1,23 @@
+{
+	"name": "PaperPlane",
+	"version": "0.0.1",
+	"author": "Andrew <andrew@lobos.me>",
+	"description": "link sharing web application",
+	
+	"contributors": [ 
+	    {
+	      "name": "Andrew Lobos",
+	      "email": "andrew@lobos.me"
+	    },
+	    {
+	      "name": "Ben Thomas",
+	      "email": "benjamin@thomasnetwork.net"
+	    } 
+	],
+	"dependencies" : {
+		"node-schedule": "*",
+		"cheerio": "*",
+		"express": "*",
+		"socket.io": "*"
+	}
+}
