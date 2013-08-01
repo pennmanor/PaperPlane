@@ -1,7 +1,7 @@
 {
 	"autoTitle": true,
 	
-	"changeUser": false,
+	"changeUser": true,
 	"user": "paperplane",
 	"group": "paperplane"
 }
