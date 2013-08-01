@@ -76,14 +76,14 @@ function appendLink(user, urlName, url, customTitle)
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
 		insertElementAt(createText(' posted a link to '), data);
-		insertElementAt(createElement('a', {'href':url}, urlName), data);
+		insertElementAt(createElement('a', {'href':url, 'target':'_blank'}, urlName), data);
 		$("#chatBody").prepend(data)
 	}
 	else{
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
 		insertElementAt(createText(" posted a link: " + customTitle + " - "), data);
-		insertElementAt(createElement('a', {'href':url}, urlName), data);
+		insertElementAt(createElement('a', {'href':url, 'target':'_blank'}, urlName), data);
 		$("#chatBody").prepend(data)
 	}
 }
@@ -223,7 +223,7 @@ socket.on("file", function(data)
 		ele = createElement('p');
 		insertElementAt(createElement('strong', null, data.username), ele);
 		insertElementAt(createText(' posted a file: '), ele);
-		insertElementAt(createElement('a', {'href':"uploads/"+data.fsFileName}, data.title), ele);
+		insertElementAt(createElement('a', {'href':"uploads/"+data.fsFileName, 'target':'_blank'}, data.title), ele);
 		$("#chatBody").prepend(ele);
 	}
 });
