@@ -8,12 +8,15 @@ var fs = require("fs"),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
+process.chdir(__dirname);
+
+config = JSON.parse(fs.readFileSync("config.json"));
+
 app.use(express.static("frontend"));
 app.use(express.bodyParser());
 
 app.use("/uploads", express.static("uploads"));
 
-var getURLTitle = true;
 var log = new Array();
 
 var rule = new scheduler.RecurrenceRule();
@@ -71,7 +74,7 @@ io.on("connection", function(socket)
 	{
 		data.type = "link";
 		data.linkTitle = data.url;
-		if ( getURLTitle && data.url.split(":")[0] == "http" )
+		if ( config.autoTitle && data.url.split(":")[0] == "http" )
 		{
 			url = urlParser.parse(data.url);
 			var options = {
@@ -110,3 +113,8 @@ io.on("connection", function(socket)
 
 
 server.listen(80);
+if ( config.changeUser )
+{
+	process.setgid(config.group);
+	process.setuid(config.user);
+}
