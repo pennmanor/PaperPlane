@@ -1,126 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>PaperPlane</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/bootstrap-fileupload.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	
-	<link href="css/index.css" rel="stylesheet">
-  </head>
-  <body>
-    <div id="url-bar" class="navbar navbar-inverse navbar-static-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">PaperPlane - Room <span id="roomNumber">---</span></a>
-		  <div class="nav-collapse collapse">
-              <ul class="nav pull-right">
-    			  <li class="active"><a href="#urlSubmitForm" data-toggle="tab">Link</a></li>
-    			  <li><a href="#fileSubmitForm" data-toggle="tab">File</a></li>
-              
-              </ul>
-		  </div>
-        </div>
-      </div>
-    </div>
-    <div id="content" class="container">
-		<!-- Choose room modal -->
-		<div id="changeRoom" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="changeRoomLabel" aria-hidden="true">
-		  <div class="modal-header">
-		    <h3>Connect</h3>
-		  </div>
-		  <div class="modal-body">
-	  		  <div id="changeRoomFormAlert" class="alert"></div>
-			  <div class="text-center">
-				  <input type="text" id="usernameField" class="span5" placeholder="Name"><br>
-				 <input type="text" id="roomNumberField" class="span5" placeholder="Room #">
-			  </div>
-		  </div>
-		  <div class="modal-footer">
-		    <button id="joinRoomButton" class="btn btn-primary">Join</button>
-		  </div>
-		</div>
-		<div id="changeTitle" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="changeTitleLabel" aria-hidden="true">
-			
-		  <div class="modal-header">
-		    <h3>Set Title</h3>
-		  </div>
-		  <div class="modal-body">
-			  <div class="text-center">
-				  <input type="text" id="urlTitleField" class="span5" placeholder="Title" maxlength="40">
-			  </div>
-		  </div>
-		  <div class="modal-footer">
-			<button id="changeTitleBackButton" class="btn">Cancel</button>
-		    <button id="setTitleButton" class="btn btn-primary">Set</button>
-		  </div>
-		</div>
-		<div id="loading" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="loadingLabel" aria-hidden="true">		
-		  <div class="modal-header">
-		    <h3>Uploading</h3>
-		  </div>
-		  <div class="modal-body">
-			  <div class="text-center">
-				  <div class="progress progress-striped active">
-					  <div class="bar" style="width: 100%;"></div>
-				  </div>
-			  </div>
-		  </div>
-		</div>
-		<div id="urlAlert" class="alert">
-			Please enter a valid URL (starts with http or https)
-		</div>
-		<div class="tab-content">
-			<!-- Submit URL form -->
-			<div id="urlSubmitForm" class="tab-pane active">
-				<div class="input-append input-prepend">
-					<div class="btn-group">
-						<button id="urlInfoButton" class="btn ">Set Title</button>
-						<input type="text" class="span11" id="urlInputField" placeholder="Paste your URL here">
-						<button id="urlSubmitButton" class="btn btn-primary">Send</button>
+	<head>
+		<title>PaperPlane</title>
+		<meta charset="UTF-8">
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/bootstrap-fileupload.min.css" type="text/css">
+		<link href="css/index.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div id="url-bar" class="navbar navbar-inverse navbar-static-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+					<a class="brand" href="#">PaperPlane - Room <span id="roomNumber">---</span></a>
+					<div class="nav-collapse collapse">
+						<ul class="nav pull-right">
+							<li class="active">
+								<a href="#urlSubmitForm" data-toggle="tab">Link</a>
+							</li>
+							<li>
+								<a href="#fileSubmitForm" data-toggle="tab">File</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
-			<div id="fileSubmitForm" class="tab-pane" enc-type="">
-				<form onsubmit="return false;">
-				<div class="fileupload fileupload-new" data-provides="fileupload">
-				  <div class="input-append input-prepend">
-					  <div class="btn-group">
-						  <button id="fileInfoButton" class="btn">Set Title</button>
-						  <div id="fileInputField" class="uneditable-input span3">
-							  <i class="icon-file fileupload-exists"></i>
-							  <span class="fileupload-preview"></span>
-						  </div>
-						 
-						  <span id="fileUploadButton" class="btn btn-file">
-							  <span class="fileupload-new">Select file</span>
-							  <span class="fileupload-exists">Change</span>
-							  <input id="fileInput" type="file" accept="application/pdf" />
-						  </span>
-						  <a href="#" id="fileRemoveButton" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-						  <button id="fileSubmitButton" class="btn btn-success">Send</button>
-	  				  </div>
-					  </div>
+		</div>
+		<div id="content" class="container">
+			<!-- Choose room modal -->
+			<div id="changeRoom" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-header">
+					<h3>Connect</h3>
 				</div>
-			</form>
+				<div class="modal-body">
+					<div id="changeRoomFormAlert" class="alert"></div>
+					<div class="text-center">
+						<input type="text" id="usernameField" class="span5" placeholder="Name"><br>
+						<input type="text" id="roomNumberField" class="span5" placeholder="Room #">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="joinRoomButton" class="btn btn-primary">Join</button>
+				</div>
 			</div>
+			<!-- Change title modal -->
+			<div id="changeTitle" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-header">
+					<h3>Set Title</h3>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<input type="text" id="urlTitleField" class="span5" placeholder="Title" maxlength="40">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="changeTitleBackButton" class="btn">Cancel</button>
+					<button id="setTitleButton" class="btn btn-primary">Set</button>
+				</div>
+			</div>
+			<!-- loading modal -->
+			<div id="loading" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-header">
+					<h3>Uploading</h3>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<div class="progress progress-striped active">
+							<div class="bar" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Invalid Url Alert -->
+			<div id="urlAlert" class="alert">
+				Please enter a valid URL (starts with http or https)
+			</div>
+			<div id="submitArea" class="tab-content">
+				<!-- Submit URL form -->
+				<div id="urlSubmitForm" class="tab-pane active">
+					<div class="input-append input-prepend">
+						<div class="btn-group">
+							<button id="urlInfoButton" class="btn">Set Title</button>
+							<input type="text" class="span11" id="urlInputField" placeholder="Paste your URL here">
+							<button id="urlSubmitButton" class="btn btn-primary">Send</button>
+						</div>
+					</div>
+				</div>
+				<div id="fileSubmitForm" class="tab-pane">
+					<form onsubmit="return false;">
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="input-append input-prepend">
+								<div class="btn-group">
+									<button id="fileInfoButton" class="btn">Set Title</button>
+									<div id="fileInputField" class="uneditable-input span3">
+										<i class="icon-file fileupload-exists"></i>
+										<span class="fileupload-preview"></span>
+									</div>
+									<span id="fileUploadButton" class="btn btn-file">
+										<span class="fileupload-new">Select file</span>
+										<span class="fileupload-exists">Change</span>
+										<input id="fileInput" type="file" accept="application/pdf">
+									</span>
+									<a href="#" id="fileRemoveButton" class="btn fileupload-exists" data-dismiss="fileupload" name="fileRemoveButton">Remove</a>
+									<button id="fileSubmitButton" class="btn btn-success">Send</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="chatBody" class="well"></div>
 		</div>
-		<br>
-		<div id="chatBody" class="well">
-		</div>
-    </div> <!-- /container -->
-	<script src="socket.io/socket.io.js"></script>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/bootstrap-fileupload.min.js" type="text/javascript" charset="utf-8"></script>
-	
-	<script src="js/object.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/index.js"></script>
-  </body>
+		<script src="socket.io/socket.io.js" type="text/javascript"></script>
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/bootstrap-fileupload.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/object.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript"></script>
+	</body>
 </html>
