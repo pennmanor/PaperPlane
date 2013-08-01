@@ -8,6 +8,8 @@ var fs = require("fs"),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
+process.chdir(__dirname);
+
 config = JSON.parse(fs.readFileSync("config.json"));
 
 app.use(express.static("frontend"));
