@@ -1,3 +1,15 @@
+/*---------------------------------------------------//
+// PaperPlane 1.0.0
+// link and file sharing web application
+// Andrew Lobos <andrew@lobos.me>
+// Benjamin Thomas <benjamin@thomasnetwork.net>
+//---------------------------------------------------*/
+
+
+form{
+	margin:0;
+}
+
 #content
 {
 	padding-top: 30px;
@@ -5,10 +17,14 @@
 
 #submitArea
 {
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
 #urlSubmitForm
 {
 	text-align:center;
+}
+
+.fileupload{
+	margin:0;
 }
