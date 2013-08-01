@@ -232,7 +232,7 @@ $("#fileSubmitButton").click(function()
 	$("#urlInfoButton").html("Set Title");
 	$("#fileInfoButton").html("Set Title");
 	title = '';
-	
+	$("#loading").modal("show");
 	$.ajax({
 		"url": "/uploadHandler",
 		data: f,
@@ -243,6 +243,7 @@ $("#fileSubmitButton").click(function()
 		{
 			$('.fileupload').fileupload('reset');
 			barResize();
+			$("#loading").modal("hide");
 		}
 	});
 	
