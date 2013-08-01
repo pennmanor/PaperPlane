@@ -53,6 +53,7 @@ app.post("/uploadHandler", function(req,res)
 		{
 			f = {type:"file", username: req.param("username"), fileName: uploadedFile.name, fsFileName: fsName, title: fTitle, room: req.param("room")};
 			log.push(f);
+			console.log(req.connection.remoteAddress+"("+req.param("username")+") uploaded "+uploadedFile.name+ " to "+req.param("room"));
 			io.sockets.emit("file", f);
 		});
 	});
@@ -75,6 +76,8 @@ io.on("connection", function(socket)
 	{
 		data.type = "link";
 		data.linkTitle = data.url;
+		console.log(socket.handshake.address.address+"("+data.username+") posted "+data.url+" in "+data.room);
+
 		if ( config.autoTitle && data.url.split(":")[0] == "http" )
 		{
 			url = urlParser.parse(data.url);
