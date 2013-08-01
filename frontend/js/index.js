@@ -183,7 +183,7 @@ function appendLink(user, urlName, url, customTitle)
 	else{
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
-		insertElementAt(createText(" posted a link for " + customTitle + " - "), data);
+		insertElementAt(createText(" posted a link: " + customTitle + " - "), data);
 		insertElementAt(createElement('a', {'href':url}, urlName), data);
 		$("#chatBody").prepend(data)
 	}
@@ -232,7 +232,7 @@ $("#fileSubmitButton").click(function()
 	$("#urlInfoButton").html("Set Title");
 	$("#fileInfoButton").html("Set Title");
 	title = '';
-	
+	$("#loading").modal("show");
 	$.ajax({
 		"url": "/uploadHandler",
 		data: f,
@@ -243,6 +243,7 @@ $("#fileSubmitButton").click(function()
 		{
 			$('.fileupload').fileupload('reset');
 			barResize();
+			$("#loading").modal("hide");
 		}
 	});
 	
