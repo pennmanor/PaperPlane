@@ -162,13 +162,34 @@ $('#urlInputField').keypress(function(e)
 			$("#urlAlert").show();
 			return;
 		}
+		socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
 		$("#urlInfoButton").html("Set Title");
 		$("#fileInfoButton").html("Set Title");
 		title = '';
-		socket.emit("link", {room:room, username:username, linkTitle:url, url:url, customTitle:title});
 		$("#urlInputField").val("");
 		$("#urlAlert").hide();
+		barResize();
+		
     }
+});
+
+$('#urlTitleField').keypress(function(e){
+	if(e.which == 13){
+		title = $.trim($("#urlTitleField").val());
+		$("#urlTitleField").val("");
+		$("#fileTitleField").val("");
+	
+		if ( title == "" ){
+			$("#urlInfoButton").html("Set Title");
+			$("#fileInfoButton").html("Set Title");
+		}
+		else{
+			$("#urlInfoButton").html(title);
+			$("#fileInfoButton").html(title);
+		}	
+		$("#changeTitle").modal("hide");
+		barResize();
+	}
 });
 
 function appendLink(user, urlName, url, customTitle)
