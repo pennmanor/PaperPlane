@@ -115,6 +115,6 @@ io.on("connection", function(socket)
 server.listen(80);
 if ( config.changeUser )
 {
-	process.setuid(config.user);
 	process.setgid(config.group);
+	process.setuid(config.user);
 }
