@@ -183,7 +183,7 @@ function appendLink(user, urlName, url, customTitle)
 	else{
 		data = createElement('p');
 		insertElementAt(createElement('strong', null, user), data);
-		insertElementAt(createText(" posted a link for " + customTitle + " - "), data);
+		insertElementAt(createText(" posted a link: " + customTitle + " - "), data);
 		insertElementAt(createElement('a', {'href':url}, urlName), data);
 		$("#chatBody").prepend(data)
 	}

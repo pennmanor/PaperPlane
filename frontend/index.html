@@ -74,8 +74,8 @@
 					</div>
 				</div>
 			</div>
-			<div id="fileSubmitForm" class="tab-pane">
-				
+			<div id="fileSubmitForm" class="tab-pane" enc-type="">
+				<form onsubmit="return false;">
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 				  <div class="input-append input-prepend">
 					  <div class="btn-group">
@@ -84,16 +84,18 @@
 							  <i class="icon-file fileupload-exists"></i>
 							  <span class="fileupload-preview"></span>
 						  </div>
+						 
 						  <span id="fileUploadButton" class="btn btn-file">
 							  <span class="fileupload-new">Select file</span>
 							  <span class="fileupload-exists">Change</span>
-							  <input id="fileInput" type="file" />
+							  <input id="fileInput" type="file" accept="application/pdf" />
 						  </span>
 						  <a href="#" id="fileRemoveButton" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 						  <button id="fileSubmitButton" class="btn btn-success">Send</button>
 	  				  </div>
 					  </div>
 				</div>
+			</form>
 			</div>
 		</div>
 		<br>
