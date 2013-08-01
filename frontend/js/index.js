@@ -98,6 +98,60 @@ $("#changeTitleBackButton").click(function()
 	$("#changeTitle").modal("hide");
 });
 
+$('#usernameField').keypress(function(e)
+{
+    if(e.which == 13) {
+		tmpUsername = $("#usernameField").val();
+		tmpRoom = parseInt($("#roomNumberField").val());
+		if ( tmpUsername != "" && tmpRoom )
+		{
+			$("#chatBody").html("");
+			username = tmpUsername
+			room = tmpRoom;
+			$("#roomNumber").html(room);
+			$("#changeRoom").modal("hide");
+			$("#changeRoomFormAlert").hide();
+			socket.emit("resync");
+		}
+		else
+		{
+			if ( !tmpRoom )
+				$("#changeRoomFormAlert").html("Please enter a number in the room field.");
+			if ( tmpUsername == "" )
+				$("#changeRoomFormAlert").html("Please fill out the name field.");
+			$("#changeRoomFormAlert").show();
+		}
+		
+    }
+});
+
+$('#roomNumberField').keypress(function(e)
+{
+    if(e.which == 13) {
+		tmpUsername = $("#usernameField").val();
+		tmpRoom = parseInt($("#roomNumberField").val());
+		if ( tmpUsername != "" && tmpRoom )
+		{
+			$("#chatBody").html("");
+			username = tmpUsername
+			room = tmpRoom;
+			$("#roomNumber").html(room);
+			$("#changeRoom").modal("hide");
+			$("#changeRoomFormAlert").hide();
+			socket.emit("resync");
+		}
+		else
+		{
+			if ( !tmpRoom )
+				$("#changeRoomFormAlert").html("Please enter a number in the room field.");
+			if ( tmpUsername == "" )
+				$("#changeRoomFormAlert").html("Please fill out the name field.");
+			$("#changeRoomFormAlert").show();
+		}
+		
+    }
+});
+
 $('#urlInputField').keypress(function(e)
 {
     if(e.which == 13) {
