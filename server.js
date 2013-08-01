@@ -69,6 +69,7 @@ io.on("connection", function(socket)
 	
 	socket.on("link", function(data)
 	{
+		data.type = "link";
 		data.linkTitle = data.url;
 		if ( getURLTitle && data.url.split(":")[0] == "http" )
 		{
