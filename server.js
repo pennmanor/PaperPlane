@@ -8,14 +8,11 @@ var fs = require("fs"),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
+io.set('log level', 1);
+
 process.chdir(__dirname);
 
 config = JSON.parse(fs.readFileSync("config.json"));
-
-app.use(express.static("frontend"));
-app.use(express.bodyParser());
-
-app.use("/uploads", express.static("uploads"));
 
 var log = new Array();
 
@@ -35,6 +32,10 @@ function saveAndPushLink(link)
 	io.sockets.emit("link", link);
 }
 
+app.use(express.static("frontend"));
+app.use(express.bodyParser());
+
+app.use("/uploads", express.static("uploads"));
 
 app.post("/uploadHandler", function(req,res)
 {
@@ -44,11 +45,10 @@ app.post("/uploadHandler", function(req,res)
 		
 	fs.readFile(uploadedFile.path, function(err, data)
 	{
-		var fsName = (new Date().getTime())+uploadedFile.name;
+		var fsName = (Math.floor(new Date().getTime()/1000))+uploadedFile.name;
 		var fTitle = req.param("title");
 		if ( !fTitle )
 			fTitle = uploadedFile.name;
-		console.log(data);
 		fs.writeFile("uploads/"+fsName, data, function(err)
 		{
 			f = {type:"file", username: req.param("username"), fileName: uploadedFile.name, fsFileName: fsName, title: fTitle, room: req.param("room")};
@@ -66,7 +66,8 @@ io.on("connection", function(socket)
 	{
 		for( var i = 0; i < log.length; i++ )
 		{
-			socket.emit(log[i].type, log[i]);
+			if ( data.room == log[i].room )
+				socket.emit(log[i].type, log[i]);
 		}
 	});
 	

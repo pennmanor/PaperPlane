@@ -25,7 +25,7 @@ function joinRoom()
 		$("#roomNumber").html(room);
 		$("#changeRoom").modal("hide");
 		$("#changeRoomFormAlert").hide();
-		socket.emit("resync");
+		socket.emit("resync", {"room": room});
 	}
 	else
 	{
