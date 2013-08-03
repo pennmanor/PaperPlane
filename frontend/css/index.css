@@ -25,6 +25,21 @@ form{
 	text-align:center;
 }
 
+.nav-fix
+{
+	margin:auto;
+}
+
 .fileupload{
 	margin:0;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom
+{
+	position: fixed;
+}
+
+.icon{
+	padding-left:10px;
+	padding-right:10px;
 }
