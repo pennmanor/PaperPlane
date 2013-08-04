@@ -17,8 +17,8 @@ config = JSON.parse(fs.readFileSync("config.json"));
 var log = new Array();
 
 var rule = new scheduler.RecurrenceRule();
-rule.hour = 22;
-rule.minute = 44;
+rule.hour = 23;
+rule.minute = 0;
 
 var resetJob = scheduler.scheduleJob(rule, function()
 {
