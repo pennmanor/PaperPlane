@@ -8,14 +8,15 @@ var fs = require("fs"),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
 
-io.set('log level', 1);
+io.set('log level', 1); // Stop socket.io debug output
 
-process.chdir(__dirname);
+process.chdir(__dirname); // Change working directory to server.js's directory
 
-config = JSON.parse(fs.readFileSync("config.json"));
+config = JSON.parse(fs.readFileSync("config.json")); // Load config.json
 
 var log = new Array();
 
+// Configure node-schedule to reset links and files
 var rule = new scheduler.RecurrenceRule();
 rule.hour = 23;
 rule.minute = 0;
@@ -48,17 +49,13 @@ var resetJob = scheduler.scheduleJob(rule, function()
 	console.log("Files and links reset");
 });
 
-function saveAndPushLink(link)
-{
-	log.push(link);
-	io.sockets.emit("link", link);
-}
-
+// Configure express
 app.use(express.static("frontend"));
 app.use(express.bodyParser());
 
 app.use("/uploads", express.static("uploads"));
 
+// Handler used by file uploads
 app.post("/uploadHandler", function(req,res)
 {
 	uploadedFile = req.files.file;
@@ -85,6 +82,7 @@ app.post("/uploadHandler", function(req,res)
 
 io.on("connection", function(socket)
 {
+	// Event for "resyncing" a client with the room's history
 	socket.on("resync", function(data)
 	{
 		for( var i = 0; i < log.length; i++ )
@@ -94,12 +92,14 @@ io.on("connection", function(socket)
 		}
 	});
 	
+	// Event for submitting a link
 	socket.on("link", function(data)
 	{
 		data.type = "link";
 		data.linkTitle = data.url;
 		console.log(socket.handshake.address.address+"("+data.username+") posted "+data.url+" in "+data.room);
-
+		
+		// If the URL is http ( not SSL ), attempt to connect and pull the data from the page's <title>
 		if ( config.autoTitle && data.url.split(":")[0] == "http" )
 		{
 			url = urlParser.parse(data.url);
@@ -126,18 +126,24 @@ io.on("connection", function(socket)
 					title = $("title").html();
 					if ( title )
 						data.linkTitle = title;
-					saveAndPushLink(data);
+					log.push(data);
+					io.sockets.emit("link", data);
+					
 				});
 			}).on('error', function(e) {
-				saveAndPushLink(data);
+				log.push(data);
+				io.sockets.emit("link", data);
 			});
 		}
-		else
-			saveAndPushLink(data);
+		else // Otherwise, send it out with the URL as the title
+		{
+			log.push(data);
+			io.sockets.emit("link", data);
+		}
 	});	
 });
 
-
+// Bind to port 80, and switch to unprivileged user
 server.listen(80);
 if ( config.changeUser )
 {
