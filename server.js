@@ -17,8 +17,8 @@ config = JSON.parse(fs.readFileSync("config.json"));
 var log = new Array();
 
 var rule = new scheduler.RecurrenceRule();
-rule.hour = 23;
-rule.minute = 0;
+rule.hour = 22;
+rule.minute = 44;
 
 var resetJob = scheduler.scheduleJob(rule, function()
 {
@@ -34,11 +34,14 @@ var resetJob = scheduler.scheduleJob(rule, function()
 
 		for ( var i = 0; i < files.length; i++ )
 		{
-			fs.unlink("uploads/"+files[i], function(err)
+			if ( files[i] != "index.html")
 			{
-				if ( err )
-					console.log("Removing upload \"uploads/"+files[i]+"\" failed: "+err);
-			});
+				fs.unlink("uploads/"+files[i], function(err)
+				{
+					if ( err )
+						console.log("Removing upload \"uploads/"+files[i]+"\" failed: "+err);
+				});
+			}
 		}
 	});
 
