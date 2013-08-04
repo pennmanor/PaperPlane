@@ -23,7 +23,26 @@ rule.minute = 0;
 var resetJob = scheduler.scheduleJob(rule, function()
 {
 	log = new Array();
-	console.log("Reset links");
+
+	fs.readdir("uploads", function (err, files)
+	{
+		if ( err )
+		{
+			console.log("Failed to remove uploads: "+err);
+			return;
+		}
+
+		for ( var i = 0; i < files.length; i++ )
+		{
+			fs.unlink("uploads/"+files[i], function(err)
+			{
+				if ( err )
+					console.log("Removing upload \"uploads/"+files[i]+"\" failed: "+err);
+			});
+		}
+	});
+
+	console.log("Files and links reset");
 });
 
 function saveAndPushLink(link)
