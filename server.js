@@ -143,8 +143,8 @@ io.on("connection", function(socket)
 	});	
 });
 
-// Bind to port 80, and switch to unprivileged user
-server.listen(80);
+// Bind HTTP server, and switch to unprivileged user
+server.listen(config.HTTPport);
 if ( config.changeUser )
 {
 	process.setgid(config.group);
