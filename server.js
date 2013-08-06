@@ -66,7 +66,22 @@ app.post("/uploadHandler", function(req,res)
 
 	uploadedFile = req.files.file;
 	if ( !uploadedFile )
+	{
 		res.send("You didn't send a file!");
+		return;
+	}
+
+	if ( uploadedFile.type != "application/pdf" )
+	{
+		res.send("Bad file type");
+		return;
+	}
+
+	if ( uploadedFile.size > 4194304 )
+	{
+		res.send("Invalid Size");
+		return;
+	}
 
 	fs.readFile(uploadedFile.path, function(err, data)
 	{
