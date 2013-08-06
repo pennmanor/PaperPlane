@@ -5,7 +5,13 @@ _A node.js powered link and file sharing application designed for use in the cla
 
 1. Install node.js and npm.
 2. Download PaperPlane and run install.sh
-3. You're done! PaperPlane will now be running on port 80.
+3. You're done! PaperPlane will now be running on port 80
+
+## Updating
+install.sh will detect if PaperPlane is already installed and replace the system version with the version in the directory it is ran from.
+
+Alternatively, you can run git pull in /var/local/paperplane and restart the daemon.
+
 
 ## Configuration
 The configuration file is located at _/var/local/paperplane/config.json_
