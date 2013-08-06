@@ -58,10 +58,16 @@ app.use("/uploads", express.static("uploads"));
 // Handler used by file uploads
 app.post("/uploadHandler", function(req,res)
 {
+	if ( !req.param("room") || !req.param("username") )
+	{
+		res.send("NO");
+		return;
+	}
+
 	uploadedFile = req.files.file;
 	if ( !uploadedFile )
 		res.send("You didn't send a file!");
-		
+
 	fs.readFile(uploadedFile.path, function(err, data)
 	{
 		var fsName = (Math.floor(new Date().getTime()/1000))+uploadedFile.name;
@@ -95,6 +101,9 @@ io.on("connection", function(socket)
 	// Event for submitting a link
 	socket.on("link", function(data)
 	{
+		if ( !data.room || !data.username )
+			return;
+
 		data.type = "link";
 		data.linkTitle = data.url;
 		console.log(socket.handshake.address.address+"("+data.username+") posted "+data.url+" in "+data.room);
