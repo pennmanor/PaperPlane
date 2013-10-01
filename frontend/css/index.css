@@ -10,6 +10,12 @@ form{
 	margin:0;
 }
 
+#school-logo {
+	width:44px;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+
 #content
 {
 	padding-top: 30px;
