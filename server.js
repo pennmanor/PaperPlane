@@ -1,5 +1,5 @@
 /*
-  Copyright 2013 Andrew Lobos and Penn Manor School District
+  Copyright 2013 Penn Manor School District, Andrew Lobos, and Benjamin Thomas
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
