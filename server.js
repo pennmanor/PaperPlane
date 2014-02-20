@@ -161,7 +161,8 @@ io.on("connection", function(socket)
 	
 				res.on("end", function()
 				{	
-					contentType = res.getHeader("content-type");
+					contentType = res.headers['content-type'];
+					title = false;
 					if ( contentType == "text/html" )
 					{
 						try
