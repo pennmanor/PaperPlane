@@ -160,9 +160,16 @@ io.on("connection", function(socket)
 				});	
 	
 				res.on("end", function()
-				{			
-					$ = cheerio.load(html);
-					title = $("title").html();
+				{	
+					contentType = res.getHeader("content-type");
+					if ( contentType == "text/html" )
+					{
+						try
+						{		
+							$ = cheerio.load(html);
+							title = $("title").html();
+						} catch(e) {} 
+					}
 					if ( title )
 						data.linkTitle = title;
 					log.push(data);
