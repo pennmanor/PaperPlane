@@ -16,12 +16,15 @@
 var fs = require("fs"),
 	scheduler = require("node-schedule"),
 	urlParser = require("url"),
+	async = require("async"),
 	cheerio = require("cheerio"),
 	express = require("express"),
 	app = express(),
 	http = require('http'),
 	server = http.createServer(app),
 	io = require('socket.io').listen(server);
+
+app.set('view engine', 'ejs');
 
 io.set('log level', 1); // Stop socket.io debug output
 
@@ -116,11 +119,38 @@ app.post("/uploadHandler", function(req,res)
 	res.send("OK");
 });
 
+app.get("/iplist/:room", function(req,res)
+{
+  clients = io.sockets.clients();
+  ipAddrs = new Array();
+  async.each(clients, function(c, cb)
+  {
+    c.get("room", function(err, room)
+    {
+      if ( room == req.param("room") )
+      {
+        ipAddrs.push(c.handshake.address.address);
+        cb();
+      }
+    });
+  },
+  function(err)
+  {
+    if ( err )
+      res.send("Error "+err);
+    else
+    {
+      res.render("iplist", {room: req.param("room"), list: ipAddrs});  
+    }  
+  });
+});
+
 io.on("connection", function(socket)
 {
 	// Event for "resyncing" a client with the room's history
 	socket.on("resync", function(data)
 	{
+		socket.set("room", data.room);
 		for( var i = 0; i < log.length; i++ )
 		{
 			if ( data.room == log[i].room )

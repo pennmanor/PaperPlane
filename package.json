@@ -18,6 +18,8 @@
 		"node-schedule": "*",
 		"cheerio": "*",
 		"express": "*",
-		"socket.io": "*"
+		"socket.io": "*", 
+		"async": "*",
+		"ejs": "*"
 	}
 }
