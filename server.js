@@ -132,6 +132,8 @@ app.get("/iplist/:room", function(req,res)
         ipAddrs.push(c.handshake.address.address);
         cb();
       }
+      else
+        cb();
     });
   },
   function(err)
