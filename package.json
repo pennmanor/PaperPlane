@@ -17,7 +17,7 @@
 	"dependencies" : {
 		"node-schedule": "*",
 		"cheerio": "*",
-		"express": "*",
+		"express": "3.5.1",
 		"socket.io": "*", 
 		"async": "*",
 		"ejs": "*"
