@@ -1,5 +1,5 @@
 /*
-  Copyright 2013 Penn Manor School District, Andrew Lobos, and Benjamin Thomas
+  Copyright 2014 Penn Manor School District, Andrew Lobos, Benjamin Thomas, Alex Lagunas
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ var fs = require("fs"),
 	async = require("async"),
 	cheerio = require("cheerio"),
 	express = require("express"),
+	bodyParser = require('body-parser'),
 	app = express(),
 	http = require('http'),
 	server = http.createServer(app),
@@ -69,7 +70,7 @@ var resetJob = scheduler.scheduleJob(rule, function()
 
 // Configure express
 app.use(express.static("frontend"));
-app.use(express.bodyParser());
+app.use(bodyParser());
 
 app.use("/uploads", express.static("uploads"));
 

@@ -27,6 +27,7 @@ Parameters:
 * Node.js ( tested on v0.10.15 ) 
 * cheerio
 * express
+* body-parser
 * socket.io
 * node-schedule
 
