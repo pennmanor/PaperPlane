@@ -153,7 +153,7 @@ io.on("connection", function(socket)
 	// Event for "resyncing" a client with the room's history
 	socket.on("resync", function(data)
 	{
-		socket.set("room", data.room);
+		socket.room = data.room;
 		for( var i = 0; i < log.length; i++ )
 		{
 			if ( data.room == log[i].room )

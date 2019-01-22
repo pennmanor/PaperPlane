@@ -1,9 +1,9 @@
 {
 	"autoTitle": true,
 	
-	"HTTPport": 80,
+	"HTTPport": 8080,
 
-	"changeUser": true,
+	"changeUser": false,
 	"user": "paperplane",
 	"group": "paperplane"
 }
